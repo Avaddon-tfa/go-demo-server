@@ -24,14 +24,16 @@ var Movies []Movie
 func main() {
 	r := mux.NewRouter()
 
-	Movies = append(Movies, Movie{ID: "1", Isbn: "428337", Title: "Lord of the Rings", Director: &Director{FirstName: "Peter", LastName: "Jackson"}})
+	Movies = append(Movies, Movie{ID: "1", Isbn: "123456", Title: "Movie 1", Director: &Director{FirstName: "John", LastName: "Doe"}})
+	Movies = append(Movies, Movie{ID: "2", Isbn: "789012", Title: "Movie 2", Director: &Director{FirstName: "Jane", LastName: "Smith"}})
 
 	r.HandleFunc("/movies", getMovies).Methods("GET")
-	r.HandleFunc("/movies/{ID}", getMovie).Methods("GET")
+	r.HandleFunc("/movies/{id}", getMovie).Methods("GET")
 	r.HandleFunc("/movies", createMovie).Methods("POST")
-	r.HandleFunc("/movies/{ID}", updateMovie).Methods("PUT")
-	r.HandleFunc("/movies/{ID}", deleteMovie).Methods("DELETE")
+	r.HandleFunc("/movies/{id}", deleteMovie).Methods("DELETE")
+	r.HandleFunc("/movies/{id}", updateMovie).Methods("PUT")
 
-	fmt.Printf("Starting Server at 8000")
-	log.Fatal(http.ListenAndServe(":8000", r))
+	addr := ":8000"
+	fmt.Printf("Starting Server at :%s", addr)
+	log.Fatal(http.ListenAndServe(addr, r))
 }

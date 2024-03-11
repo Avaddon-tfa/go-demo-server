@@ -10,7 +10,10 @@ import (
 
 func getMovies(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(Movies)
+	err := json.NewEncoder(w).Encode(Movies)
+	if err != nil {
+		return
+	}
 
 }
 
